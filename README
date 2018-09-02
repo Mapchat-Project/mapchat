@@ -1,0 +1,69 @@
+INSTRUCTIONS TO SET UP MAPCHAT DEVELOPMENT ENVIRONMENT:
+
+These instructions assume that you have the following installed:
+- Nodejs and npm
+- React
+- create-react-app
+- xcode
+
+They further assume that you have cloned this project from the 
+github repository. Thus, while everything is more or less set up,
+this guide will go into some detail about what has been done to 
+link create-react-app to apache cordova and what you need to do 
+to get everything working on your system.
+
+The main project directory is mapchat
+Cordova serves its files through mapchat/www. This mapchat directory
+is the the directory cordova is concerned with.
+
+Somewhat confusingly, the mapchat directory, has a directory 
+inside it named mapchat as well. mapchat/mapchat is inhabited by 
+react and the create-react-app boilerplate. Inside mapchat/mapchat/src,
+you will find a file named index.js. This is the file used by react during
+the build process and has been modified slightly to include cordova. 
+Further, mapchat/mapchat/public has a file called index.html into which
+the compile process injects the javascript and the code from the mapchat 
+React app. This file has also been modified to include the cordova.js
+file. Lastly mapchat/mapchat/package.json is the file that contains all
+the dependencies added by npm and is also used to run the necessary scripts 
+for building the app. The building script has been modified to copy the built
+files over to mapchat/www. The command assumes that the build platform is mac osx
+and will not work on other platforms.
+
+Now, finally, the set up process:
+1. use npm to install apache cordova using:
+	npm install -g cordova
+You may need to use sudo to install this since -g installs the package globally
+2. you may now cd into mapchat and execute:
+	npm install
+This simply checks the dependencies inside mapchat/package.json and installs
+them. 
+3. Now cd into mapchat/mapchat and execute again:
+	npm install
+This simply checks the dependencies inside mapchat/mapchat/package.json and installs
+them. 
+4. You now need to install cocoapods - a dependency manager used by cordova during
+the build process using:
+	sudo gem install cocoapods
+Setup cocoapods using:
+	pod setup
+This will download a substantial amount of data (~600mb)
+5. Now navigate to mapchat/platforms/ios and open HelloCordova.xcworkspace. The file 
+will open in xcode. You will need to set up a team here. This will allow you to 
+generate a signing certificate for the app. For now, choosing the personal option is fine
+6. Navigate back to mapchat and type into the cli:
+	cordova requirements
+This should verify that you have everything ready to compile the app. 
+Google resourcefully/panic if this step yields any errors
+7. Navigate to mapchat/mapchat and run:
+	npm run build
+This will compile the react app and copy the files to mapchat/www
+8. Now navigate back to mapchat and type into the terminal:
+	cordova build ios
+Make sure your iphone is not connected to your computer since this apparently seems to 
+lead to compile errors (See- https://stackoverflow.com/questions/42022191/cordova-build-for-ios-no-profile-found)
+9. Finally to run the app:
+	cordova emulate ios
+
+
+If all goes well, this should run the app inside an emulated iPhone window
