@@ -4,9 +4,14 @@
   "private": true,
   "homepage": "../www",
   "dependencies": {
+    "create-react-class": "^15.6.3",
+    "leaflet": "^1.3.4",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
-    "react-scripts": "1.1.5"
+    "react-leaflet": "^2.0.1",
+    "react-map-gl": "^3.3.4",
+    "react-scripts": "1.1.5",
+    "react-tappable": "^1.0.4"
   },
   "scripts": {
     "start": "react-scripts start",
